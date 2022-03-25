@@ -3,14 +3,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { ReactSweetAlert } from 'sweetalert2-react-content';
-import FileCreate from './Files/FileCreate';
-import api from '../services/api.service';
-import { default as Modal } from '../components/Modal';
+import FileCreate from './FileCreate';
+import api from '../../services/api.service';
+import { default as Modal } from '../../components/Modal';
 
-jest.mock('../services/api.service');
+jest.mock('../../services/api.service');
 const mockedApi = api as jest.Mocked<typeof api>;
 
-jest.mock('../components/Modal');
+jest.mock('../../components/Modal');
 const MockedModal = Modal as jest.Mocked<typeof Swal & ReactSweetAlert>;
 
 jest.setTimeout(60000);
