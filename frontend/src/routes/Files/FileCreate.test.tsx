@@ -175,6 +175,210 @@ describe('<FileCreate />', () => {
     expect(uploadButton.disabled).toBeFalsy();
   });
 
+  test('if the entered family is not already in the gottenFamilies object, it should be pushed to the server onFamilyChange', async () => {
+    mockedApi.get.mockResolvedValue(
+      new Promise((resolve) => {
+        const mockedResponse = {
+          data: [{ id: 1337, label: 'testlabel' }],
+        };
+        resolve(mockedResponse);
+      }),
+    );
+    render(<FileCreate />);
+
+    mockedApi.post.mockResolvedValue(
+      new Promise((resolve) => {
+        const mockedResponse = {
+          data: { testResponseKey: 'testResponseValue' },
+        };
+        resolve(mockedResponse);
+      }),
+    );
+
+    const uploadButton = screen.getByText(/Upload!/i) as HTMLButtonElement;
+    expect(uploadButton.disabled).toBeTruthy();
+
+    // type label
+    const labelFormControl = await screen.findByTestId('label');
+    fireEvent.change(labelFormControl, {
+      target: { value: 'test label' },
+    });
+
+    // type description
+    const descriptionFormControl = await screen.findByTestId('description');
+    fireEvent.change(descriptionFormControl, {
+      target: { value: 'test description' },
+    });
+
+    // select file
+    const fileUploadFormControl = await screen.findByTestId('file-upload');
+    fireEvent.change(fileUploadFormControl, {
+      target: { files: ['testfile content'] },
+    });
+
+    // select license
+    const licenseFormSelect = await screen.findByTestId('license');
+    fireEvent.change(licenseFormSelect, {
+      target: { value: '1337' },
+    });
+
+    // create and select a new family
+    await selectEvent.create(screen.getByLabelText('Feature model family'), 'non exisiting family');
+    await selectEvent.select(screen.getByLabelText('Feature model family'), 'non exisiting family');
+
+    // click tags
+    await selectEvent.select(screen.getByLabelText('Tags'), 'testlabel');
+
+    // click legal share checkbox
+    const legalShareCheckbox = await screen.findByTestId('legal-share');
+    fireEvent.click(legalShareCheckbox);
+
+    // click user data checkbox
+    const userDataCheckbox = await screen.findByTestId('user-data');
+    fireEvent.click(userDataCheckbox);
+
+    // click open source checkbox
+    const openSourceCheckbox = await screen.findByTestId('open-source');
+    fireEvent.click(openSourceCheckbox);
+
+    expect(uploadButton.disabled).toBeFalsy();
+  });
+
+  test('if the entered tag is not already in the gottenTags object, it should be pushed to the server onTagChange', async () => {
+    mockedApi.get.mockResolvedValue(
+      new Promise((resolve) => {
+        const mockedResponse = {
+          data: [{ id: 1337, label: 'testlabel' }],
+        };
+        resolve(mockedResponse);
+      }),
+    );
+
+    mockedApi.post.mockResolvedValue(
+      new Promise((resolve) => {
+        const mockedResponse = {
+          data: { testResponseKey: 'testResponseValue' },
+        };
+        resolve(mockedResponse);
+      }),
+    );
+    
+    render(<FileCreate />);
+
+    const uploadButton = screen.getByText(/Upload!/i) as HTMLButtonElement;
+    expect(uploadButton.disabled).toBeTruthy();
+
+    // type label
+    const labelFormControl = await screen.findByTestId('label');
+    fireEvent.change(labelFormControl, {
+      target: { value: 'test label' },
+    });
+
+    // type description
+    const descriptionFormControl = await screen.findByTestId('description');
+    fireEvent.change(descriptionFormControl, {
+      target: { value: 'test description' },
+    });
+
+    // select file
+    const fileUploadFormControl = await screen.findByTestId('file-upload');
+    fireEvent.change(fileUploadFormControl, {
+      target: { files: ['testfile content'] },
+    });
+
+    // select license
+    const licenseFormSelect = await screen.findByTestId('license');
+    fireEvent.change(licenseFormSelect, {
+      target: { value: '1337' },
+    });
+
+    // select feature model family
+    await selectEvent.select(screen.getByLabelText('Feature model family'), 'testlabel');
+
+    // create and select a new tag
+    await selectEvent.create(screen.getByLabelText('Tags'), 'non exisiting tagname');
+    await selectEvent.select(screen.getByLabelText('Tags'), 'non exisiting tagname');
+
+    // click legal share checkbox
+    const legalShareCheckbox = await screen.findByTestId('legal-share');
+    fireEvent.click(legalShareCheckbox);
+
+    // click user data checkbox
+    const userDataCheckbox = await screen.findByTestId('user-data');
+    fireEvent.click(userDataCheckbox);
+
+    // click open source checkbox
+    const openSourceCheckbox = await screen.findByTestId('open-source');
+    fireEvent.click(openSourceCheckbox);
+
+    expect(uploadButton.disabled).toBeFalsy();
+  });
+
+    test('button should enable after label, description, file, license, family, tags, legalShare, userData and openSource have been entered. Also newVersionOf has no version selected', async () => {
+    mockedApi.get.mockResolvedValue(
+      new Promise((resolve) => {
+        const mockedResponse = {
+          data: [{ id: 1337, label: 'testlabel' }],
+        };
+        resolve(mockedResponse);
+      }),
+    );
+    render(<FileCreate />);
+
+    const uploadButton = screen.getByText(/Upload!/i) as HTMLButtonElement;
+    expect(uploadButton.disabled).toBeTruthy();
+
+    // type label
+    const labelFormControl = await screen.findByTestId('label');
+    fireEvent.change(labelFormControl, {
+      target: { value: 'test label' },
+    });
+
+    // type description
+    const descriptionFormControl = await screen.findByTestId('description');
+    fireEvent.change(descriptionFormControl, {
+      target: { value: 'test description' },
+    });
+
+    // select file
+    const fileUploadFormControl = await screen.findByTestId('file-upload');
+    fireEvent.change(fileUploadFormControl, {
+      target: { files: ['testfile content'] },
+    });
+
+    // select license
+    const licenseFormSelect = await screen.findByTestId('license');
+    fireEvent.change(licenseFormSelect, {
+      target: { value: '1337' },
+    });
+
+    // select newVersionOf
+    const versionFormSelect = await screen.findByTestId('version');
+    fireEvent.change(versionFormSelect, {
+      target: { value: '---' },
+    });
+
+    // select feature model family
+    await selectEvent.select(screen.getByLabelText('Feature model family'), 'testlabel');
+
+    // click tags
+    await selectEvent.select(screen.getByLabelText('Tags'), 'testlabel');
+
+    // click legal share checkbox
+    const legalShareCheckbox = await screen.findByTestId('legal-share');
+    fireEvent.click(legalShareCheckbox);
+
+    // click user data checkbox
+    const userDataCheckbox = await screen.findByTestId('user-data');
+    fireEvent.click(userDataCheckbox);
+
+    // click open source checkbox
+    const openSourceCheckbox = await screen.findByTestId('open-source');
+    fireEvent.click(openSourceCheckbox);
+
+    expect(uploadButton.disabled).toBeFalsy();
+  });
+
   test('button should not enable if no file has been selected', async () => {
     mockedApi.get.mockResolvedValue(
       new Promise((resolve) => {

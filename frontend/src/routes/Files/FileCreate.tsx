@@ -116,23 +116,6 @@ export default class FileCreate extends Component<Props, State> {
     });
   };
 
-  getTagsWithTagId = (options: any) => options.map((option: any) => {
-    let id = option.value;
-
-    if (!Number.isInteger(id)) {
-      const newElement = this.state.gottenTags.find((element) => (element.label === option.value));
-
-      if (newElement && newElement.value) {
-        id = newElement.value;
-      }
-    }
-
-    return {
-      id,
-      label: option.label,
-    };
-  });
-
   onTagChange = (options: any) => {
     if (!this.state.gottenTags.some((e) => options[options.length - 1].label === e.label)) {
       api
@@ -154,6 +137,23 @@ export default class FileCreate extends Component<Props, State> {
       });
     }
   };
+
+  private getTagsWithTagId = (options: any) => options.map((option: any) => {
+    let id = option.value;
+
+    if (!Number.isInteger(id)) {
+      const newElement = this.state.gottenTags.find((element) => (element.label === option.value));
+
+      if (newElement && newElement.value) {
+        id = newElement.value;
+      }
+    }
+
+    return {
+      id,
+      label: option.label,
+    };
+  });
 
   onLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const label = e.target as HTMLInputElement;
@@ -183,21 +183,6 @@ export default class FileCreate extends Component<Props, State> {
     }
   };
 
-  getFamilyWithFamilyId = (option: any) => {
-    let id = option.value;
-
-    if (!isNumeric(id)) {
-      const newElement = this.state.gottenFamilies
-        .find((element) => (element.label === option.value));
-
-      if (newElement && newElement.value) {
-        id = newElement.value;
-      }
-    }
-
-    return id;
-  };
-
   onNewFamilyChange = (option: any) => {
     if (option.value === '') {
       this.setState({ newVersionOfSelection: true });
@@ -224,6 +209,21 @@ export default class FileCreate extends Component<Props, State> {
         featureFamily,
       });
     }
+  };
+
+  private getFamilyWithFamilyId = (option: any) => {
+    let id = option.value;
+
+    if (!isNumeric(id)) {
+      const newElement = this.state.gottenFamilies
+        .find((element) => (element.label === option.value));
+
+      if (newElement && newElement.value) {
+        id = newElement.value;
+      }
+    }
+
+    return id;
   };
 
   onLicenseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
