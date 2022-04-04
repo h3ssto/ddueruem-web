@@ -117,6 +117,13 @@ export default class SiteNavbar extends Component<Props, State> {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
+
+              <Nav.Link
+                href="/dsgvo"
+                className={this.props.url === '/dsgvo' ? 'active' : ''}
+              >
+                DSGVO
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -15,6 +15,7 @@ import FileShow from './routes/Files/FileShow';
 import TagCreate from './routes/Tags/TagCreate';
 import FileEdit from './routes/Files/FileEdit';
 import RegisterConfirmation from './routes/RegisterConfirmation';
+import Dsgvo from './routes/Dsgvo';
 import FamilyCreate from './routes/Families/FamilyCreate';
 import FamilyIndex from './routes/Families/FamilyIndex';
 import FileUploadConfirmation from './routes/Files/FileUploadConfirmation';
@@ -85,6 +86,12 @@ function App() {
             <RequireAuth>
               <Profile />
             </RequireAuth>
+          )}
+        />
+        <Route
+          path="/dsgvo"
+          element={(
+            <Dsgvo />
           )}
         />
         <Route path="/files/:id" element={<FileShow />} />

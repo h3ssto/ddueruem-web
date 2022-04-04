@@ -124,7 +124,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         plain_message = strip_tags(html_message)
         user._email_user("DDueruem Account Activation", plain_message, html_message=html_message)
 
-    def _email_user(self, subject, message, from_email=None, **kwargs):
+    def _email_user(self, subject, message, from_email="noreply@uni-ulm.de", **kwargs):
         """
         Sends an email to this user
         """

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Button, Container, Form, Row,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { default as Modal } from '../components/Modal';
 import AuthService from '../services/auth.service';
 
@@ -108,6 +109,11 @@ export default class Register extends Component<Props, State> {
                 onChange={this.onPasswordConfirmationChange}
               />
             </Form.Group>
+            <p>
+              Durch das Registrieren stimmen Sie unserer&nbsp;
+              <Link to="/dsgvo" target="_blank">DSGVO</Link>
+              &nbsp;zu.
+            </p>
             <Button
               variant="primary"
               type="submit"
