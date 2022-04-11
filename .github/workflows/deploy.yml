@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - dev
-      - issue-100-deploy-to-production
+      - issue-128-fix-deploy
 jobs:
   deploy:
     runs-on: ubuntu-latest

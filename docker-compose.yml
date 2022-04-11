@@ -43,9 +43,11 @@ services:
     build: ./backend
     volumes:
       - djangomedia:/api/media
+      - /var/run/docker.sock:/var/run/docker.sock
     command: ./entrypoint.sh
     depends_on:
       - db
+    privileged: true
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`doener.tobiasbetz.de`)"
